@@ -83,13 +83,19 @@ app.post("/cadastrocasamoveis", async (req, res) => {
 
 });
 
-app.get("/cadastrousuario", async (req, res) => {
-  res.sendFile(__dirname + "/cadastrousuario.html");
+app.get("/cad_usuario", async (req, res) => {
+  res.sendFile(__dirname + "/cad_usuario.html");
 });
 
+app.get("/cad_procuto.html", async (req, res) => {
+  res.sendFile(__dirname + "/cad_produto.html");
+});
+
+//rota padrao
 app.get("/", async (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
+
 
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
