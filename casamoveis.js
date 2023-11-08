@@ -13,15 +13,22 @@ mongoose.connect("mongodb://127.0.0.1:27017/dbcasamoveis", {
   useUnifiedTopology: true,
 });
 
-const casamoveis = new mongoose.Schema({
+const UsuarioSchema = new mongoose.Schema({
+  email : {type : String, required : true},
+  senha : {type : String}
+});
+
+
+const casamoveisSchema = new mongoose.Schema({
     id_produtomoveis: { type: String,required: true },
-    Descrição: { type: String,required: true },
-    Marca: { type: String,required: true },
-    Data_fabricação: { type: Date,required: true },
+    Descrição: { type: String},
+    Marca: { type: String},
+    Data_fabricação: { type: Date},
     Quantidade_estoque: { type: Number,},
   });
 
-  const casamoveis = mongoose.model("casamoveis", casamoveis);
+  const Usuario = mongoose.model("Usuario", UsuarioSchema);
+  const casamoveis = mongoose.model("casamoveis",casamoveisSchema)
 
   app.post("/usuario", async (req, res) => {
 
@@ -40,15 +47,40 @@ const casamoveis = new mongoose.Schema({
   
     
     const usuario = new Usuario({
-  
       email: email,
       senha: senha,
     });
+
     
   try {
     const newUsuario = await usuario.save();
     res.json({ error: null, msg: "Cadastro ok", UsuarioId: newUsuario._id });
   } catch (error) {}
+
+});
+
+app.post("/cadastrocasamoveis", async (req, res) => {
+   
+   
+  const id_produtomoveis = req.body.id_produtomoveis;
+  const Descrição = req.body.Descrição;
+  const Marca = req.body.Marca;
+  const Data_fabricação = req.body.Data_fabricação;
+  const Quantidade_estoque = req.body.Quantidade_estoque;
+   
+  const produtomoveis = new produtomoveis({
+    id_produtomoveis : id_produtomoveis,
+     Descrição : Descrição,
+     Marca : Marca,
+     Data_fabricação : Data_fabricação,
+     Quantidade_estoque : Quantidade_estoque,
+  });
+
+  try {
+    const newProdutomoveis = await produtomoveis.save();
+    res.json({ error: null, msg: "Cadastro ok", ProdutocabeloId: newProdutomoveis._id });
+  } catch (error) {}
+
 });
 
 app.get("/cadastrousuario", async (req, res) => {
